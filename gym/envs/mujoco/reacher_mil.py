@@ -23,7 +23,7 @@ class ReacherMILEnv(mujoco_env.MujocoEnv, utils.EzPickle):
             self.xml_paths = natsorted(glob.glob(os.path.join(os.path.dirname(__file__), "assets/sim_vision_reach_train_xmls/*")))
         self.xml_iter = iter(self.xml_paths)
         self.n_distractors = 2 #2
-        mujoco_env.MujocoEnv.__init__(self, self.xml_iter.next(), 5)
+        mujoco_env.MujocoEnv.__init__(self, self.xml_iter.__next__(), 5)
         self.eept_vel = np.zeros_like(self.get_body_com("fingertip"))
 
     def _step(self, a):
@@ -79,7 +79,7 @@ class ReacherMILEnv(mujoco_env.MujocoEnv, utils.EzPickle):
         return self._get_obs()
     
     def next(self):
-        mujoco_env.MujocoEnv.__init__(self, self.xml_iter.next(), 5)
+        mujoco_env.MujocoEnv.__init__(self, self.xml_iter.__next__(), 5)
         self.eept_vel = np.zeros_like(self.get_body_com("fingertip"))
 
     def get_current_image_obs(self):
